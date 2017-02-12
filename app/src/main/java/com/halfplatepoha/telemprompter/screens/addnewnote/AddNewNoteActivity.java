@@ -7,12 +7,14 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.EditText;
 
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveContents;
@@ -28,6 +30,7 @@ import com.halfplatepoha.telemprompter.R;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -54,12 +57,15 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
     @Inject
     AddNewNotePresenter presenter;
 
-    private DriveId driveId;
-
     private static final int REQUEST_SPEECH = 1;
 
     @Override
     public boolean isGoogleApiClientNeeded() {
+        return true;
+    }
+
+    @Override
+    public boolean enableHomeAsUp() {
         return true;
     }
 
@@ -74,6 +80,7 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
                 .build()
                 .inject(this);
 
+        setupToolbar();
         presenter.onCreate();
     }
 
@@ -88,7 +95,7 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
     }
 
     @Override
-    public void setResultAndFinish(final String title, String text) {
+    public void setResultAndFinish(final String title, final String text) {
         File file = new File(getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()), title + ".txt");
         new SaveFileTask(file).execute(text);
 
@@ -118,7 +125,20 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
                                         showToast("Created a file: " + result.getDriveFile().getDriveId());
                                         Log.e("create file", result.getDriveFile().getDriveId().encodeToString() + " " + result.getDriveFile().getDriveId().getResourceId());
 
-                                        DriveFile driveFile = result.getDriveFile().getDriveId().asDriveFile();
+                                        DriveFile file = result.getDriveFile().getDriveId().asDriveFile();
+                                        file.open(getApiClient(), DriveFile.MODE_WRITE_ONLY, null)
+                                                .setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
+                                                    @Override
+                                                    public void onResult(@NonNull DriveApi.DriveContentsResult result) {
+                                                        if(!result.getStatus().isSuccess()) {
+                                                            showToast("Error in opening file");
+                                                        }
+
+                                                        DriveContents driveContents = result.getDriveContents();
+                                                        new EditContentsAsyncTask(AddNewNoteActivity.this, driveContents)
+                                                                .execute(text);
+                                                    }
+                                                });
                                     }
                                 });
                     }
@@ -212,42 +232,41 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public class EditContentsAsyncTask extends ApiClientAsyncTask<String, Void, Boolean> {
+    public class EditContentsAsyncTask extends ApiClientAsyncTask<String, Void, DriveContents> {
 
-        private DriveFile file;
+        private DriveContents content;
 
-        public EditContentsAsyncTask(Context context, DriveFile file) {
+        public EditContentsAsyncTask(Context context, DriveContents content) {
             super(context);
-            this.file = file;
+            this.content = content;
         }
 
         @Override
-        protected Boolean doInBackgroundConnected(String... args) {
+        protected DriveContents doInBackgroundConnected(String... args) {
             try {
-                DriveApi.DriveContentsResult driveContentsResult = file.open(
-                        getGoogleApiClient(), DriveFile.MODE_WRITE_ONLY, null).await();
-                if (!driveContentsResult.getStatus().isSuccess()) {
-                    return false;
-                }
-                DriveContents driveContents = driveContentsResult.getDriveContents();
-                OutputStream outputStream = driveContents.getOutputStream();
-                outputStream.write(args[0].getBytes());
-                com.google.android.gms.common.api.Status status =
-                        driveContents.commit(getGoogleApiClient(), null).await();
-                return status.getStatus().isSuccess();
+                ParcelFileDescriptor parcelFileDescriptor = content.getParcelFileDescriptor();
+                FileOutputStream fo = new FileOutputStream(parcelFileDescriptor.getFileDescriptor());
+                Writer writer = new OutputStreamWriter(fo);
+                writer.write(args[0]);
             } catch (IOException e) {
-                Log.e("Edit task", "IOException while appending to the output stream", e);
+                e.printStackTrace();
             }
-            return false;
+            return content;
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if (!result) {
-                showToast("Error while editing contents");
-                return;
-            }
-            showToast("Successfully edited contents");
+        protected void onPostExecute(DriveContents content) {
+            content.commit(getApiClient(), null)
+                    .setResultCallback(new ResultCallback<com.google.android.gms.common.api.Status>() {
+                        @Override
+                        public void onResult(@NonNull com.google.android.gms.common.api.Status status) {
+                            if(status.isSuccess()) {
+                                showToast("File has been written!");
+                            } else {
+                                showToast("File has Failed");
+                            }
+                        }
+                    });
         }
     }
 }

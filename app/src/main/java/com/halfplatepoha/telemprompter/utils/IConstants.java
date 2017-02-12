@@ -9,5 +9,6 @@ public interface IConstants {
     String RESULT_TEXT = "result_text";
     String RESULT_FILE_PATH = "result_file_path";
     String PREF_SPEED = "pref_speed";
+    String PREF_TEXT = "pref_text";
     String DRIVE_ID = "drive_id";
 }

@@ -10,4 +10,7 @@ public interface SettingsPresenter extends BasePresenter {
     void onSpeedPlusClicked(int speed);
     void onSpeedMinusClicked(int speed);
     void onHelpClicked();
+
+    void onTextPlusClicked(int textSize);
+    void onTextMinusClicked(int textSize);
 }

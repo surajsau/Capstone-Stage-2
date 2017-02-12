@@ -16,8 +16,11 @@ import com.halfplatepoha.telemprompter.R;
 
 public class ExistingDriveAdapter extends DataBufferAdapter<Metadata> {
 
-    public ExistingDriveAdapter(Context context) {
+    private DriveClickListener listener;
+
+    public ExistingDriveAdapter(Context context, DriveClickListener listener) {
         super(context, R.layout.row_files);
+        this.listener = listener;
     }
 
     @Override
@@ -25,9 +28,19 @@ public class ExistingDriveAdapter extends DataBufferAdapter<Metadata> {
         if(view == null ){
             view = LayoutInflater.from(getContext()).inflate(R.layout.row_files, viewGroup, false);
         }
-        Metadata metadata = getItem(i);
+        final Metadata metadata = getItem(i);
         TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         tvTitle.setText(metadata.getTitle());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDriveClick(metadata);
+            }
+        });
         return view;
+    }
+
+    public interface DriveClickListener {
+        void onDriveClick(Metadata metadata);
     }
 }

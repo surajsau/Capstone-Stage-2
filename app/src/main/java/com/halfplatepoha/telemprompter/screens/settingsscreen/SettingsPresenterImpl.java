@@ -1,5 +1,9 @@
 package com.halfplatepoha.telemprompter.screens.settingsscreen;
 
+import android.content.Intent;
+
+import static junit.runner.Version.id;
+
 /**
  * Created by surajkumarsau on 10/02/17.
  */
@@ -34,7 +38,24 @@ public class SettingsPresenterImpl implements SettingsPresenter {
     }
 
     @Override
+    public void onTextPlusClicked(int textSize) {
+        if(++textSize < 15) {
+            view.displayText(Integer.toString(textSize));
+            view.updateTextSize(textSize);
+        }
+    }
+
+    @Override
+    public void onTextMinusClicked(int textSize) {
+        if(--textSize > 0) {
+            view.displayText(Integer.toString(textSize));
+            view.updateTextSize(textSize);
+        }
+    }
+
+    @Override
     public void onCreate() {
         view.setToolbarTitle("Settings");
+        view.initSettingsValues();
     }
 }

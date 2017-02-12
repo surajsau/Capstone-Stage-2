@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -73,6 +75,11 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public boolean isGoogleApiClientNeeded() {
+        return false;
+    }
+
+    @Override
+    public boolean enableHomeAsUp() {
         return false;
     }
 
@@ -148,6 +155,9 @@ public class MainActivity extends BaseActivity implements MainView {
                 if(data != null) {
                     String filePath = data.getStringExtra(IConstants.RESULT_FILE_PATH);
                     new GetContentTask().execute(filePath);
+
+//                    String text = data.getStringExtra(IConstants.RESULT_TEXT);
+//                    tvText.setText(text);
                 }
             }
         }
@@ -176,7 +186,11 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void startScroll() {
-        scrollRunnable.setDelay(100);
+        int speed = preferences.getInt(IConstants.PREF_SPEED, 0);
+        int textSize = preferences.getInt(IConstants.PREF_TEXT, 0);
+        tvText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24*(1 + (float)(textSize/15)));
+
+        scrollRunnable.setDelay((long)(100*(2 - (float)(speed/15))));
         timeHandler.postDelayed(scrollRunnable, 0);
     }
 

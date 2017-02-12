@@ -11,4 +11,10 @@ public interface SettingsView extends BaseView {
     void updateSpeed(int speed);
 
     void openHelp();
+
+    void displayText(String textSize);
+
+    void updateTextSize(int textSize);
+
+    void initSettingsValues();
 }

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -42,6 +43,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     public abstract boolean isGoogleApiClientNeeded();
 
+    public abstract boolean enableHomeAsUp();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     public void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(enableHomeAsUp());
     }
 
     public App getApp() {
@@ -111,5 +115,17 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             }
             break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(enableHomeAsUp()) {
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    onBackPressed();
+                    break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

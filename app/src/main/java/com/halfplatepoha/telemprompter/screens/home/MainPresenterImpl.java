@@ -39,6 +39,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onStartStopClicked() {
+        view.updateStartStopButtonText(currentState.getText());
         if(StartStopState.START.getText().equalsIgnoreCase(currentState.getText())) {
             view.stopScroll();
             currentState = StartStopState.STOP;
@@ -46,7 +47,6 @@ public class MainPresenterImpl implements MainPresenter {
             view.startScroll();
             currentState = StartStopState.START;
         }
-        view.updateStartStopButtonText(currentState.getText());
     }
 
     @Override

@@ -33,7 +33,16 @@
             android:exported="true"
             android:readPermission="com.halfplatepoha.telemprompter.READ" />
 
-        <activity android:name=".free.screens.home.MainActivity"></activity>
+        <meta-data
+            android:name="com.google.android.gms.drive.API_KEY"
+            android:value=""/>
+        <meta-data
+            android:name="com.google.android.drive.API_KEY"
+            android:value="XXXXXXXXXXXXXXXXX"/>
+        <meta-data
+            android:name="com.google.android.apps.drive.APP_ID"
+            android:value="id=XXXXXXXXXXXXXXXXXX" />
+
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -41,6 +42,9 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
     @Bind(R.id.tvScrollSpeed)
     TextView tvScrollSpeed;
 
+    @Bind(R.id.tvTextSize)
+    TextView tvTextSize;
+
     @Inject
     SettingsPresenter presenter;
 
@@ -49,6 +53,11 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
 
     @Override
     public boolean isGoogleApiClientNeeded() {
+        return true;
+    }
+
+    @Override
+    public boolean enableHomeAsUp() {
         return true;
     }
 
@@ -80,13 +89,22 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
         presenter.onSpeedMinusClicked(preferences.getInt(IConstants.PREF_SPEED, 0));
     }
 
+    @OnClick(R.id.btnTextPlus)
+    void onBtnTextPlusClick() {
+        presenter.onTextPlusClicked(preferences.getInt(IConstants.PREF_TEXT, 0));
+    }
+
+    @OnClick(R.id.btnTextMinus)
+    void onBtnTextMinusClick() {
+        presenter.onTextMinusClicked(preferences.getInt(IConstants.PREF_TEXT, 0));
+    }
     @OnClick(R.id.tvHelp)
     void onHelpClicked() {
         presenter.onHelpClicked();
     }
 
-    @OnClick(R.id.btnDriveLogin)
-    void onDriveClicked() {
+//    @OnClick(R.id.btnDriveLogin)
+    public void onDriveClicked() {
         MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
                 .setTitle("Teleprompter")
                 .build();
@@ -127,6 +145,24 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
     @Override
     public void openHelp() {
         startActivity(new Intent(this, HelpActivity.class));
+    }
+
+    @Override
+    public void displayText(String textSize) {
+        tvTextSize.setText(textSize);
+    }
+
+    @Override
+    public void updateTextSize(int textSize) {
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putInt(IConstants.PREF_TEXT, textSize);
+        edit.apply();
+    }
+
+    @Override
+    public void initSettingsValues() {
+        tvTextSize.setText(Integer.toString(preferences.getInt(IConstants.PREF_TEXT, 1)));
+        tvScrollSpeed.setText(Integer.toString(preferences.getInt(IConstants.PREF_SPEED, 1)));
     }
 
 }

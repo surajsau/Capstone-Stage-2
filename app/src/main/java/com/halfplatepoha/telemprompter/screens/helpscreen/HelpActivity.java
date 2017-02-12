@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.halfplatepoha.telemprompter.base.BaseActivity;
 import com.halfplatepoha.telemprompter.R;
-import com.halfplatepoha.telemprompter.screens.settingsscreen.DaggerSettingsComponent;
 
 import javax.inject.Inject;
 
@@ -16,6 +15,11 @@ public class HelpActivity extends BaseActivity implements HelpView {
     @Override
     public boolean isGoogleApiClientNeeded() {
         return false;
+    }
+
+    @Override
+    public boolean enableHomeAsUp() {
+        return true;
     }
 
     @Override
