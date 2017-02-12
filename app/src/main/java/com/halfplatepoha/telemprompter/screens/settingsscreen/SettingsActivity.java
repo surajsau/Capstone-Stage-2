@@ -8,6 +8,8 @@ import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -29,26 +31,25 @@ import com.halfplatepoha.telemprompter.utils.IConstants;
 import com.halfplatepoha.telemprompter.R;
 import com.halfplatepoha.telemprompter.screens.helpscreen.HelpActivity;
 
-import javax.inject.Inject;
+public class SettingsActivity extends BaseActivity implements SettingsView,
+        View.OnClickListener{
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-import static junit.runner.Version.id;
-
-public class SettingsActivity extends BaseActivity implements SettingsView {
-
-    @Bind(R.id.tvScrollSpeed)
     TextView tvScrollSpeed;
 
-    @Bind(R.id.tvTextSize)
     TextView tvTextSize;
 
-    @Inject
+    Button btnSpeedPlus;
+
+    Button btnSpeedMinus;
+
+    Button btnTextPlus;
+
+    Button btnTextMinus;
+
+    TextView tvHelp;
+
     SettingsPresenter presenter;
 
-    @Inject
     SharedPreferences preferences;
 
     @Override
@@ -66,39 +67,44 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        ButterKnife.bind(this);
+        tvScrollSpeed = (TextView) findViewById(R.id.tvScrollSpeed);
+        tvTextSize = (TextView) findViewById(R.id.tvTextSize);
+        btnSpeedMinus = (Button) findViewById(R.id.btnSpeedMinus);
+        btnSpeedPlus = (Button) findViewById(R.id.btnSpeedPlus);
+        btnTextMinus = (Button) findViewById(R.id.btnTextMinus);
+        btnTextPlus = (Button) findViewById(R.id.btnTextPlus);
+        tvHelp = (TextView) findViewById(R.id.tvHelp);
 
-        DaggerSettingsComponent.builder()
-                .appComponent(getApp().getComponent())
-                .settingsModule(new SettingsModule(this))
-                .build()
-                .inject(this);
+        btnSpeedMinus.setOnClickListener(this);
+        btnSpeedPlus.setOnClickListener(this);
+        btnTextPlus.setOnClickListener(this);
+        btnTextMinus.setOnClickListener(this);
+        tvHelp.setOnClickListener(this);
+
+        presenter = new SettingsPresenterImpl(this);
+        preferences = getApp().getSharedPreference();
 
         setupToolbar();
 
         presenter.onCreate();
     }
 
-    @OnClick(R.id.btnSpeedPlus)
     void onBtnSpeedPlusClick() {
         presenter.onSpeedPlusClicked(preferences.getInt(IConstants.PREF_SPEED, 0));
     }
 
-    @OnClick(R.id.btnSpeedMinus)
     void onBtnSpeedMinusClick() {
         presenter.onSpeedMinusClicked(preferences.getInt(IConstants.PREF_SPEED, 0));
     }
 
-    @OnClick(R.id.btnTextPlus)
     void onBtnTextPlusClick() {
         presenter.onTextPlusClicked(preferences.getInt(IConstants.PREF_TEXT, 0));
     }
 
-    @OnClick(R.id.btnTextMinus)
     void onBtnTextMinusClick() {
         presenter.onTextMinusClicked(preferences.getInt(IConstants.PREF_TEXT, 0));
     }
-    @OnClick(R.id.tvHelp)
+
     void onHelpClicked() {
         presenter.onHelpClicked();
     }
@@ -165,4 +171,32 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
         tvScrollSpeed.setText(Integer.toString(preferences.getInt(IConstants.PREF_SPEED, 1)));
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnTextMinus:{
+                onBtnTextMinusClick();
+            }
+            break;
+
+            case R.id.btnTextPlus:{
+                onBtnTextPlusClick();
+            }
+            break;
+
+            case R.id.btnSpeedMinus:{
+                onBtnSpeedMinusClick();
+            }
+            break;
+
+            case R.id.btnSpeedPlus:{
+                onBtnSpeedPlusClick();
+            }
+            break;
+
+            case R.id.tvHelp:{
+                onHelpClicked();
+            }
+        }
+    }
 }

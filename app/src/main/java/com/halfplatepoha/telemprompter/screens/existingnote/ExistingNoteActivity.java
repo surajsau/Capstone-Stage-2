@@ -50,27 +50,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class ExistingNoteActivity extends BaseActivity implements ExistingNoteView,
         AdapterView.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor>,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         ExistingDriveAdapter.DriveClickListener{
 
-    @Inject
     ExistingNotePresenter presenter;
 
-    @Inject
-    SharedPreferences preferences;
-
-    @Bind(R.id.lvFiles)
     ListView lvFiles;
 
-    @Bind(R.id.tvListEmpty)
     TextView tvListEmpty;
 
     ExistingDriveAdapter dataBufferAdapter;
@@ -91,13 +79,11 @@ public class ExistingNoteActivity extends BaseActivity implements ExistingNoteVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing_note);
-        ButterKnife.bind(this);
 
-        DaggerExistingNoteComponent.builder()
-                .appComponent(getApp().getComponent())
-                .existingNoteModule(new ExistingNoteModule(this))
-                .build()
-                .inject(this);
+        tvListEmpty = (TextView) findViewById(R.id.tvListEmpty);
+        lvFiles = (ListView) findViewById(R.id.lvFiles);
+
+        presenter = new ExistingNotePresenterImpl(this);
 
         setupToolbar();
         presenter.onCreate();
@@ -135,7 +121,6 @@ public class ExistingNoteActivity extends BaseActivity implements ExistingNoteVi
         ((ExistingCursorAdapter) lvFiles.getAdapter()).swapCursor(null);
     }
 
-//    @OnClick(R.id.btnDrive)
     public void onDriveButtonClick() {
         Drive.DriveApi.getAppFolder(getApiClient())
             .listChildren(getApiClient()).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {

@@ -1,6 +1,8 @@
 package com.halfplatepoha.telemprompter.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * Created by surajkumarsau on 10/02/17.
@@ -8,26 +10,13 @@ import android.app.Application;
 
 public class App extends Application {
 
-    private AppComponent component;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        initAppComponent();
     }
 
-    private void initAppComponent() {
-        component = DaggerAppComponent.builder()
-                .appModule(getAppModule())
-                .build();
-        component.inject(this);
+    public SharedPreferences getSharedPreference() {
+        return getSharedPreferences("telepromp_prefs", Context.MODE_PRIVATE);
     }
 
-    public AppComponent getComponent() {
-        return component;
-    }
-
-    private AppModule getAppModule() {
-        return new AppModule(this);
-    }
 }

@@ -11,6 +11,8 @@ import android.os.ParcelFileDescriptor;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.common.api.ResultCallback;
@@ -40,21 +42,17 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import javax.inject.Inject;
+public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
+        View.OnClickListener{
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
-
-    @Bind(R.id.etTitle)
     EditText etTitle;
 
-    @Bind(R.id.etText)
     EditText etText;
 
-    @Inject
+    Button btnStartMic;
+
+    Button btnAddNewNote;
+
     AddNewNotePresenter presenter;
 
     private static final int REQUEST_SPEECH = 1;
@@ -73,12 +71,16 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_note);
-        ButterKnife.bind(this);
 
-        DaggerAddNewNoteComponent.builder()
-                .addNewNoteModule(new AddNewNoteModule(this))
-                .build()
-                .inject(this);
+        etText = (EditText) findViewById(R.id.etText);
+        etTitle = (EditText) findViewById(R.id.etTitle);
+        btnAddNewNote = (Button) findViewById(R.id.btnSaveNote);
+        btnStartMic = (Button) findViewById(R.id.btnStartMic);
+
+        btnAddNewNote.setOnClickListener(this);
+        btnStartMic.setOnClickListener(this);
+
+        presenter = new AddNewNotePresenterImpl(this);
 
         setupToolbar();
         presenter.onCreate();
@@ -86,12 +88,12 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
 
     @Override
     public void showEmptyTitleWarning() {
-
+        showToast("Title cannot be empty");
     }
 
     @Override
     public void showEmptyTextWarning() {
-
+        showToast("Text cannot be empty");
     }
 
     @Override
@@ -162,14 +164,25 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView {
         }
     }
 
-    @OnClick(R.id.btnSaveNote)
     public void onSaveNote() {
         presenter.onSaveClicked(etTitle.getText().toString(), etText.getText().toString());
     }
 
-    @OnClick(R.id.btnStartMic)
     public void onStartMicClicked() {
         presenter.onStartMic();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSaveNote:
+                onSaveNote();
+                break;
+
+            case R.id.btnStartMic:
+                onStartMicClicked();
+                break;
+        }
     }
 
     private class SaveFileTask extends AsyncTask<String, Void, String> {

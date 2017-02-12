@@ -123,5 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="2dp"
-        android:layout_gravity="top" />
+        android:layout_gravity="top"
+        app:adSize="BANNER"
+        app:adUnitId="@string/ad_unit_id"/>
 </FrameLayout>

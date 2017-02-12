@@ -30,42 +30,33 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class MainActivity extends BaseActivity implements MainView {
+public class MainActivity extends BaseActivity implements MainView, View.OnClickListener {
 
     private static final int REQUEST_ADD_NEW = 1;
     private static final int REQUEST_CHOOSE_EXISTING = 2;
 
-    @Inject
     MainPresenter presenter;
 
-    @Inject
     SharedPreferences preferences;
 
-    @Bind(R.id.btnFab)
     Fab btnFab;
 
-    @Bind(R.id.fab_sheet)
     View sheetView;
 
-    @Bind(R.id.overlay)
     View dimOverlay;
 
-    @Bind(R.id.tvText)
     TextView tvText;
 
-    @Bind(R.id.scroll)
     ScrollView scroll;
 
-    @Bind(R.id.adView)
     AdView ads;
 
-    @Bind(R.id.btnStartStop)
+    TextView tvAddNew;
+
+    TextView tvChooseExisting;
+
+    TextView tvSettings;
+
     Button btnStartStop;
 
     MaterialSheetFab<Fab> materialSheetFab;
@@ -87,13 +78,26 @@ public class MainActivity extends BaseActivity implements MainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
-        DaggerMainComponent.builder()
-                .appComponent(getApp().getComponent())
-                .mainModule(new MainModule(this))
-                .build()
-                .inject(this);
+        btnFab = (Fab) findViewById(R.id.btnFab);
+        ads = (AdView) findViewById(R.id.adView);
+        btnStartStop = (Button) findViewById(R.id.btnStartStop);
+        scroll = (ScrollView) findViewById(R.id.scroll);
+        tvText = (TextView) findViewById(R.id.tvText);
+        dimOverlay = findViewById(R.id.overlay);
+        sheetView = findViewById(R.id.fab_sheet);
+
+        tvAddNew = (TextView) findViewById(R.id.fabAddNew);
+        tvChooseExisting = (TextView) findViewById(R.id.fabChooseExisting);
+        tvSettings = (TextView) findViewById(R.id.fabSettings);
+
+        tvAddNew.setOnClickListener(this);
+        tvSettings.setOnClickListener(this);
+        tvChooseExisting.setOnClickListener(this);
+        btnStartStop.setOnClickListener(this);
+
+        presenter = new MainPresenterImpl(this);
+        preferences = getApp().getSharedPreference();
 
         materialSheetFab = new MaterialSheetFab<>(btnFab, sheetView, dimOverlay,
                 ContextCompat.getColor(this, R.color.colorPrimaryDark),
@@ -102,7 +106,7 @@ public class MainActivity extends BaseActivity implements MainView {
         timeHandler = new Handler();
         scrollRunnable = new ScrollRunnable();
 
-        if(BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.halfplatepoha.telemprompter.free")) {
+        if(BuildConfig.ADS) {
             MobileAds.initialize(getApplicationContext(), getString(R.string.ad_unit_id));
             AdRequest request = new AdRequest.Builder().build();
             ads.loadAd(request);
@@ -110,22 +114,18 @@ public class MainActivity extends BaseActivity implements MainView {
         }
     }
 
-    @OnClick(R.id.fabAddNew)
     public void onAddNewClicked() {
         presenter.onAddNewClicked();
     }
 
-    @OnClick(R.id.fabChooseExisting)
     public void onChooseExistingClicked() {
         presenter.onChooseExistingClicked();
     }
 
-    @OnClick(R.id.fabSettings)
     public void onSettingsClicked() {
         presenter.onSettingsClicked();
     }
 
-    @OnClick(R.id.btnStartStop)
     public void onStartStopClicked() {
         presenter.onStartStopClicked();
     }
@@ -202,6 +202,31 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void updateStartStopButtonText(String text) {
         btnStartStop.setText(text);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fabAddNew:{
+                onAddNewClicked();
+                break;
+            }
+
+            case R.id.fabChooseExisting:{
+                onChooseExistingClicked();
+                break;
+            }
+
+            case R.id.fabSettings:{
+                onSettingsClicked();
+                break;
+            }
+
+            case R.id.btnStartStop:{
+                onStartStopClicked();
+                break;
+            }
+        }
     }
 
     private class ScrollRunnable implements Runnable {
