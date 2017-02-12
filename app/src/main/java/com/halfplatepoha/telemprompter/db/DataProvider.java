@@ -8,10 +8,12 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Created by surajkumarsau on 10/02/17.
@@ -39,7 +41,24 @@ public class DataProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
+        switch (uriMatcher.match(uri)) {
+            case FILEINFOS: {
+                sqLiteQueryBuilder.setTables(Contract.FileInfoColumns.TABLE_NAME);
+                break;
+            }
+            case FILEINFO: {
+                sqLiteQueryBuilder.setTables(Contract.FileInfoColumns.TABLE_NAME);
+                sqLiteQueryBuilder.appendWhere(Contract.FileInfoColumns._ID + " = " + uri.getLastPathSegment());
+                break;
+            }
+            default:
+                throw new IllegalArgumentException("Not even matched a single table/record");
+        }
+        Cursor cursor = sqLiteQueryBuilder.query(sqLiteDatabase, projection, selection, selectionArgs, sortOrder, null, Contract.FileInfoColumns.FILE_NAME + " ASC", null);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
     }
 
     @Nullable
@@ -57,10 +76,12 @@ public class DataProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+        Log.e("DP", uri.getEncodedPath());
         switch (uriMatcher.match(uri)) {
             case FILEINFOS:{
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 long id = db.insert(Contract.FileInfoColumns.TABLE_NAME, null, values);
+                Log.e("DP", "insert id : " + id);
                 return getUriForId(id, uri);
             }
 

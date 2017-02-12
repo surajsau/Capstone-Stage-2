@@ -2,22 +2,38 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.halfplatepoha.telemprompter">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
+        android:name=".app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".home.MainActivity">
+        <activity android:name=".screens.home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".settings.SettingsActivity" />
-        <activity android:name=".opennote.newnote.NewNoteActivity" />
-        <activity android:name=".opennote.addnewnote.AddNewNoteActivity"></activity>
+        <activity android:name=".screens.settingsscreen.SettingsActivity" />
+        <activity android:name=".screens.addnewnote.AddNewNoteActivity" />
+        <activity android:name=".screens.existingnote.ExistingNoteActivity" />
+        <activity android:name=".screens.helpscreen.HelpActivity" />
+
+        <provider
+            android:name=".db.DataProvider"
+            android:authorities="com.halfplatepoha.telemprompter"
+            android:exported="true"
+            android:readPermission="com.halfplatepoha.telemprompter.READ" />
+
+        <activity android:name=".free.screens.home.MainActivity"></activity>
     </application>
 
 </manifest>
