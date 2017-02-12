@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -112,6 +113,15 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
             ads.loadAd(request);
             ads.setVisibility(View.VISIBLE);
         }
+
+        getDataFromBundle();
+    }
+
+    private void getDataFromBundle() {
+        String filePath = getIntent().getStringExtra(IConstants.RESULT_FILE_PATH);
+        if(!TextUtils.isEmpty(filePath)) {
+            new GetContentTask().execute(filePath);
+        }
     }
 
     public void onAddNewClicked() {
@@ -176,7 +186,10 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
 
     @Override
     public void dismissFabSheet() {
-        materialSheetFab.hideSheet();
+        if(materialSheetFab.isSheetVisible()) {
+            materialSheetFab.hideSheet();
+            materialSheetFab.showFab();
+        }
     }
 
     @Override
