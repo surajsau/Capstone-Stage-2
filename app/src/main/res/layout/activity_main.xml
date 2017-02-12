@@ -52,6 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:backgroundTint="@color/colorPrimaryDark"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         app:fabSize="normal" />
 
     <!-- Overlay that dims the screen -->
@@ -70,7 +72,9 @@
         <android.support.v7.widget.CardView
             android:id="@+id/fab_sheet"
             android:layout_width="250dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
 
             <LinearLayout
                 android:layout_width="wrap_content"
