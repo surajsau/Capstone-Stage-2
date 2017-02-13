@@ -1,9 +1,5 @@
 package com.halfplatepoha.telemprompter.screens.settingsscreen;
 
-import android.content.Intent;
-
-import static junit.runner.Version.id;
-
 /**
  * Created by surajkumarsau on 10/02/17.
  */

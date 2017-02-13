@@ -1,56 +1,43 @@
 package com.halfplatepoha.telemprompter.screens.settingsscreen;
 
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.DriveResource;
 import com.google.android.gms.drive.MetadataChangeSet;
-import com.google.android.gms.drive.query.Filters;
-import com.google.android.gms.drive.query.Query;
-import com.google.android.gms.drive.query.SearchableField;
-import com.halfplatepoha.telemprompter.base.BaseActivity;
-import com.halfplatepoha.telemprompter.utils.IConstants;
 import com.halfplatepoha.telemprompter.R;
+import com.halfplatepoha.telemprompter.base.BaseActivity;
 import com.halfplatepoha.telemprompter.screens.helpscreen.HelpActivity;
+import com.halfplatepoha.telemprompter.utils.IConstants;
 
 public class SettingsActivity extends BaseActivity implements SettingsView,
         View.OnClickListener{
 
-    TextView tvScrollSpeed;
+    private TextView tvScrollSpeed;
 
-    TextView tvTextSize;
+    private TextView tvTextSize;
 
-    Button btnSpeedPlus;
+    private Button btnSpeedPlus;
 
-    Button btnSpeedMinus;
+    private Button btnSpeedMinus;
 
-    Button btnTextPlus;
+    private Button btnTextPlus;
 
-    Button btnTextMinus;
+    private Button btnTextMinus;
 
-    TextView tvHelp;
+    private TextView tvHelp;
 
-    SettingsPresenter presenter;
+    private SettingsPresenter presenter;
 
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
 
     @Override
     public boolean isGoogleApiClientNeeded() {

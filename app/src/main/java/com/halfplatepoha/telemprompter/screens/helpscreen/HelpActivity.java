@@ -7,7 +7,7 @@ import com.halfplatepoha.telemprompter.R;
 
 public class HelpActivity extends BaseActivity implements HelpView {
 
-    HelpPresenter presenter;
+    private HelpPresenter presenter;
 
     @Override
     public boolean isGoogleApiClientNeeded() {

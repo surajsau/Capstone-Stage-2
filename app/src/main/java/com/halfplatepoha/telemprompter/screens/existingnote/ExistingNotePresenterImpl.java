@@ -1,7 +1,5 @@
 package com.halfplatepoha.telemprompter.screens.existingnote;
 
-import android.database.Cursor;
-
 /**
  * Created by surajkumarsau on 11/02/17.
  */

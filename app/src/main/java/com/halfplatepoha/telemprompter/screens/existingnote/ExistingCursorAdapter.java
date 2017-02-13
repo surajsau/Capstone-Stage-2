@@ -3,7 +3,6 @@ package com.halfplatepoha.telemprompter.screens.existingnote;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ public class ExistingCursorAdapter extends CursorAdapter {
     private LayoutInflater inflater;
 
     public ExistingCursorAdapter(Context context) {
-        super(context, null);
+        super(context, null, true);
         inflater = LayoutInflater.from(context);
     }
 

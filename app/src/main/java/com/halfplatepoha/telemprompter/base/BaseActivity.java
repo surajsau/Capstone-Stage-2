@@ -12,11 +12,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
-import com.halfplatepoha.telemprompter.app.App;
 import com.halfplatepoha.telemprompter.R;
+import com.halfplatepoha.telemprompter.app.App;
 
 /**
  * Created by surajkumarsau on 10/02/17.
@@ -102,7 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
                 showToast("Unable to resolve");
             }
         } else {
-            GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, REQUEST_DRIVE_RESOLUTION).show();
+            GoogleApiAvailability.getInstance().getErrorDialog(this, connectionResult.getErrorCode(), REQUEST_DRIVE_RESOLUTION).show();
         }
     }
 

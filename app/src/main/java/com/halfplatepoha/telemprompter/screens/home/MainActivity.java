@@ -3,11 +3,10 @@ package com.halfplatepoha.telemprompter.screens.home;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -19,13 +18,13 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.halfplatepoha.telemprompter.BuildConfig;
-import com.halfplatepoha.telemprompter.base.BaseActivity;
-import com.halfplatepoha.telemprompter.ui.Fab;
-import com.halfplatepoha.telemprompter.utils.IConstants;
 import com.halfplatepoha.telemprompter.R;
+import com.halfplatepoha.telemprompter.base.BaseActivity;
 import com.halfplatepoha.telemprompter.screens.addnewnote.AddNewNoteActivity;
 import com.halfplatepoha.telemprompter.screens.existingnote.ExistingNoteActivity;
 import com.halfplatepoha.telemprompter.screens.settingsscreen.SettingsActivity;
+import com.halfplatepoha.telemprompter.ui.Fab;
+import com.halfplatepoha.telemprompter.utils.IConstants;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -115,6 +114,8 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
         }
 
         getDataFromBundle();
+
+        presenter.onCreate();
     }
 
     private void getDataFromBundle() {

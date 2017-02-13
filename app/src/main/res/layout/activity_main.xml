@@ -10,7 +10,7 @@
 
     <TextView android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="Telemprompter!"
+        android:text="@string/app_name"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
         android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
         <Button android:id="@+id/btnStartStop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop"
+            android:text="@string/start_stop_button_string"
             android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         app:backgroundTint="@color/colorPrimaryDark"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         app:fabSize="normal" />
@@ -74,6 +75,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin">
 
             <LinearLayout
@@ -87,7 +89,7 @@
                     android:id="@+id/fabAddNew"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Add New Note" />
+                    android:text="@string/fab_add_new_note_string" />
 
                 <View
                     android:layout_width="match_parent"
@@ -100,7 +102,7 @@
                     android:id="@+id/fabChooseExisting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Choose Existing Note" />
+                    android:text="@string/fab_choose_existing_note_string" />
 
                 <View
                     android:layout_width="match_parent"
@@ -113,7 +115,7 @@
                     android:id="@+id/fabSettings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Settings" />
+                    android:text="@string/fab_settings_string" />
 
             </LinearLayout>
 
@@ -125,7 +127,6 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="2dp"
         android:layout_gravity="top"
         app:adSize="BANNER"

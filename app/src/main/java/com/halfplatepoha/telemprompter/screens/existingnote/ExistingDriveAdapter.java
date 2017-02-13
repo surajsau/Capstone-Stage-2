@@ -25,7 +25,7 @@ public class ExistingDriveAdapter extends DataBufferAdapter<Metadata> {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if(view == null ){
+        if (view == null) {
             view = LayoutInflater.from(getContext()).inflate(R.layout.row_files, viewGroup, false);
         }
         final Metadata metadata = getItem(i);

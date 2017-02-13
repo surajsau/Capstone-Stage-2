@@ -51,6 +51,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onCreate() {
+        currentState = StartStopState.STOP;
     }
 
     private enum StartStopState {

@@ -22,7 +22,7 @@
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Title of Note"
+            android:hint="@string/enter_title_help_string"
             android:maxLines="1"
             tools:text="Sample Title"/>
 
@@ -37,19 +37,19 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@android:color/white"
-            android:hint="Add your note here"
+            android:hint="@string/add_your_note_here_help_string"
             android:textColorHint="#F0F0F0"
             style="@style/styleEditText"
             tools:text="Sample text"/>
 
         <Button android:id="@+id/btnSaveNote"
-            android:text="Save Note"
+            android:text="@string/save_note_button_string"
             android:background="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button android:id="@+id/btnStartMic"
-            android:text="Start Mic"
+            android:text="@string/start_mic_button_text"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

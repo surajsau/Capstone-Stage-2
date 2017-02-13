@@ -3,7 +3,6 @@ package com.halfplatepoha.telemprompter.screens.addnewnote;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,27 +15,23 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveFolder;
-import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataChangeSet;
+import com.halfplatepoha.telemprompter.R;
 import com.halfplatepoha.telemprompter.base.ApiClientAsyncTask;
 import com.halfplatepoha.telemprompter.base.BaseActivity;
 import com.halfplatepoha.telemprompter.db.DataProvider;
 import com.halfplatepoha.telemprompter.utils.IConstants;
-import com.halfplatepoha.telemprompter.R;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -45,15 +40,15 @@ import java.util.Locale;
 public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
         View.OnClickListener{
 
-    EditText etTitle;
+    private EditText etTitle;
 
-    EditText etText;
+    private EditText etText;
 
-    Button btnStartMic;
+    private Button btnStartMic;
 
-    Button btnAddNewNote;
+    private Button btnAddNewNote;
 
-    AddNewNotePresenter presenter;
+    private AddNewNotePresenter presenter;
 
     private static final int REQUEST_SPEECH = 1;
 

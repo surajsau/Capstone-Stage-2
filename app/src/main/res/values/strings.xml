@@ -5,7 +5,21 @@
     \u2022 \"Write Custom Text\" allows you to manually write the text you want to display. You may also save it to a file for future use.\n\n
     \u2022 \"Choose File\" allows you to import a text file to display its content. Use only \".doc\", \".docx\" or \".txt\" files.\n\n
     \u2022 Since this app is under development please be patient if something is not working &amp; feel free to contact me &amp; suggest changes.\n\n
-        \u2022 To use speed recognition offline, you should have the language installed on your device. Look for \"Ok Google\" settings.
+        \u2022 To use speed recognition offline, you should have the language installed on your device. Look for \"OK Google\" settings.
         \u2022 Use speed recognition with network connection for better performance.
     </string>
+    <string name="zero_state_string">Oops!!! Nothing here</string>
+    <string name="scroll_speed_label">Scroll speed</string>
+    <string name="text_size_label">Text Size</string>
+    <string name="enter_title_help_string">Enter Title of Note</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="help_label">Help</string>
+    <string name="add_your_note_here_help_string">Add your note here</string>
+    <string name="start_mic_button_text">Start Mic</string>
+    <string name="fab_add_new_note_string">Add New Note</string>
+    <string name="fab_choose_existing_note_string">Choose Existing Note</string>
+    <string name="fab_settings_string">Settings</string>
+    <string name="start_stop_button_string">Stop</string>
+    <string name="save_note_button_string">Save Note</string>
 </resources>
