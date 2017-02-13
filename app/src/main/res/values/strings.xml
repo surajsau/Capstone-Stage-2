@@ -41,4 +41,5 @@
     <string name="choose_existing_title">Choose Existing</string>
     <string name="settings_title">Settings</string>
     <string name="help_title">Help</string>
+    <string name="unable_to_resolve">Unable to resolve</string>
 </resources>

@@ -99,7 +99,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             try {
                 connectionResult.startResolutionForResult(this, REQUEST_RESOLVE_CONNECTION);
             } catch (IntentSender.SendIntentException e) {
-                showToast("Unable to resolve");
+                showToast(getString(R.string.unable_to_resolve));
             }
         } else {
             GoogleApiAvailability.getInstance().getErrorDialog(this, connectionResult.getErrorCode(), REQUEST_DRIVE_RESOLUTION).show();
