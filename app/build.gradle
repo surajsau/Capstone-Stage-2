@@ -12,10 +12,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        releaseKey {
+            keyAlias 'teleprompterkey'
+            keyPassword 'teleprompt'
+            storeFile file('../teleprompterkey.jks')
+            storePassword 'teleprompt'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseKey
         }
     }
     productFlavors {

@@ -8,8 +8,10 @@
     tools:context=".screens.home.MainActivity"
     android:background="@color/colorBackground">
 
+    <include layout="@layout/layout_toolbar"/>
+
     <TextView android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="?android:actionBarSize"
         android:text="@string/app_name"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
@@ -127,7 +129,7 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="?android:actionBarSize"
         android:layout_gravity="top"
         app:adSize="BANNER"
         app:adUnitId="@string/ad_unit_id"/>
