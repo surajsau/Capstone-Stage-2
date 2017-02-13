@@ -78,6 +78,7 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
         presenter = new AddNewNotePresenterImpl(this);
 
         setupToolbar();
+        setToolbarTitle(getString(R.string.add_new_title));
         presenter.onCreate();
     }
 
@@ -227,12 +228,14 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
             case REQUEST_SPEECH:{
                 if(data != null) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    StringBuilder sb = new StringBuilder(etText.getText().toString());
-                    for(String s : result) {
-                        sb.append(s);
-                    }
+                    if(result != null) {
+                        StringBuilder sb = new StringBuilder(etText.getText().toString());
+                        for (String s : result) {
+                            sb.append(s);
+                        }
 
-                    etText.setText(sb.toString());
+                        etText.setText(sb.toString());
+                    }
                 }
             }
             break;

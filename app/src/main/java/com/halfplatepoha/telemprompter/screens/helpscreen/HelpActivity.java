@@ -27,6 +27,7 @@ public class HelpActivity extends BaseActivity implements HelpView {
         presenter = new HelpPresenterImpl(this);
 
         setupToolbar();
+        setToolbarTitle(getString(R.string.help_title));
 
         presenter.onCreate();
     }

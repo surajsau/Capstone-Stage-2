@@ -67,6 +67,7 @@ public class ExistingNoteActivity extends BaseActivity implements ExistingNoteVi
         presenter = new ExistingNotePresenterImpl(this);
 
         setupToolbar();
+        setToolbarTitle(getString(R.string.choose_existing_title));
         presenter.onCreate();
 
         dataBufferAdapter = new ExistingDriveAdapter(this, this);

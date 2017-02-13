@@ -51,7 +51,6 @@ public class SettingsPresenterImpl implements SettingsPresenter {
 
     @Override
     public void onCreate() {
-        view.setToolbarTitle("Settings");
         view.initSettingsValues();
     }
 }

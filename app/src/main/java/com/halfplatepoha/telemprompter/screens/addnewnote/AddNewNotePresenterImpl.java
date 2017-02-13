@@ -37,6 +37,5 @@ public class AddNewNotePresenterImpl implements AddNewNotePresenter {
 
     @Override
     public void onCreate() {
-        view.setToolbarTitle("Add New Note");
     }
 }

@@ -36,4 +36,9 @@
     <string name="speed_not_supported">Speech not supported</string>
     <string name="file_written">File has been written!</string>
     <string name="file_writing_failed">File has Failed</string>
+
+    <string name="add_new_title">Add New Note</string>
+    <string name="choose_existing_title">Choose Existing</string>
+    <string name="settings_title">Settings</string>
+    <string name="help_title">Help</string>
 </resources>

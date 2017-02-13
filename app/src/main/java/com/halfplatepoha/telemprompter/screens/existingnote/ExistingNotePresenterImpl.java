@@ -14,7 +14,6 @@ public class ExistingNotePresenterImpl implements ExistingNotePresenter {
 
     @Override
     public void onCreate() {
-        view.setToolbarTitle("Choose Existing");
     }
 
     @Override

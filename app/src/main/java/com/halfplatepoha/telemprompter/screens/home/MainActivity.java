@@ -116,6 +116,7 @@ public class MainActivity extends BaseActivity implements MainView, View.OnClick
         getDataFromBundle();
 
         setupToolbar();
+        setToolbarTitle(getString(R.string.app_name));
         presenter.onCreate();
     }
 

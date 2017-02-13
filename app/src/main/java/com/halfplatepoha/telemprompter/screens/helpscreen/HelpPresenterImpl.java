@@ -14,6 +14,5 @@ public class HelpPresenterImpl implements HelpPresenter {
 
     @Override
     public void onCreate() {
-        view.setToolbarTitle("Help");
     }
 }

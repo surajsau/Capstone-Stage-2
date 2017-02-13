@@ -52,7 +52,6 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onCreate() {
         currentState = StartStopState.STOP;
-        view.setToolbarTitle("Teleprompter");
     }
 
     private enum StartStopState {
