@@ -108,13 +108,13 @@ public class ExistingNoteActivity extends BaseActivity implements ExistingNoteVi
             @Override
             public void onResult(@NonNull DriveApi.MetadataBufferResult metadataBufferResult) {
                 if(!metadataBufferResult.getStatus().isSuccess()) {
-                    showToast("Problem retrieving data");
+                    showToast(getString(R.string.problem_retrieving_data));
                     return;
                 }
 
                 dataBufferAdapter.clear();
                 dataBufferAdapter.append(metadataBufferResult.getMetadataBuffer());
-                showToast("Done!");
+                showToast(getString(R.string.done));
             }
         });
     }
@@ -136,7 +136,7 @@ public class ExistingNoteActivity extends BaseActivity implements ExistingNoteVi
                     @Override
                     public void onResult(@NonNull DriveApi.DriveContentsResult result) {
                         if(!result.getStatus().isSuccess()) {
-                            showToast("Error getting content");
+                            showToast(getString(R.string.error_getting_content));
                         }
 
                         DriveContents contents = result.getDriveContents();

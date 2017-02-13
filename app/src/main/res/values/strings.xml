@@ -22,4 +22,18 @@
     <string name="fab_settings_string">Settings</string>
     <string name="start_stop_button_string">Stop</string>
     <string name="save_note_button_string">Save Note</string>
+    <string name="problem_retrieving_data">Problem retrieving data</string>
+    <string name="done">Done!</string>
+    <string name="error_getting_content">Error getting content</string>
+    <string name="error_in_creating_folder">Error in creating folder</string>
+    <string name="folder_created">"Folder created : "</string>
+    <string name="title_empty_warning">Title cannot be empty</string>
+    <string name="text_empty_warning">Text cannot be empty</string>
+    <string name="error_creating_file_content">Error while trying to create new file contents</string>
+    <string name="error_creating_file">Error while trying to create the file</string>
+    <string name="created_file">"Created a file: "</string>
+    <string name="error_opening_file">Error in opening file</string>
+    <string name="speed_not_supported">Speech not supported</string>
+    <string name="file_written">File has been written!</string>
+    <string name="file_writing_failed">File has Failed</string>
 </resources>

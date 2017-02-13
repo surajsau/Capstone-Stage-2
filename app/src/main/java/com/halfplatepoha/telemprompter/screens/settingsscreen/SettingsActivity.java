@@ -96,10 +96,9 @@ public class SettingsActivity extends BaseActivity implements SettingsView,
         presenter.onHelpClicked();
     }
 
-//    @OnClick(R.id.btnDriveLogin)
     public void onDriveClicked() {
         MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
-                .setTitle("Teleprompter")
+                .setTitle(getString(R.string.app_name))
                 .build();
 
         Drive.DriveApi.getAppFolder(getApiClient())
@@ -108,9 +107,9 @@ public class SettingsActivity extends BaseActivity implements SettingsView,
                     @Override
                     public void onResult(@NonNull DriveFolder.DriveFolderResult driveFolderResult) {
                         if(!driveFolderResult.getStatus().isSuccess()) {
-                            showToast("Error in creating folder");
+                            showToast(getString(R.string.error_in_creating_folder));
                         }
-                        showToast("Folder created : " + driveFolderResult.getDriveFolder().getDriveId());
+                        showToast(getString(R.string.folder_created) + driveFolderResult.getDriveFolder().getDriveId());
                         DriveId driveId = driveFolderResult.getDriveFolder().getDriveId();
                         storeDriveIdInPreferences(driveId.encodeToString());
                     }

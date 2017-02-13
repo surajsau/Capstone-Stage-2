@@ -83,12 +83,12 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
 
     @Override
     public void showEmptyTitleWarning() {
-        showToast("Title cannot be empty");
+        showToast(getString(R.string.title_empty_warning));
     }
 
     @Override
     public void showEmptyTextWarning() {
-        showToast("Text cannot be empty");
+        showToast(getString(R.string.text_empty_warning));
     }
 
     @Override
@@ -101,7 +101,7 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
                     @Override
                     public void onResult(@NonNull DriveApi.DriveContentsResult result) {
                         if (!result.getStatus().isSuccess()) {
-                            showToast("Error while trying to create new file contents");
+                            showToast(getString(R.string.error_creating_file_content));
                             return;
                         }
 
@@ -116,10 +116,10 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
                                     @Override
                                     public void onResult(@NonNull DriveFolder.DriveFileResult result) {
                                         if (!result.getStatus().isSuccess()) {
-                                            showToast("Error while trying to create the file");
+                                            showToast(getString(R.string.error_creating_file));
                                             return;
                                         }
-                                        showToast("Created a file: " + result.getDriveFile().getDriveId());
+                                        showToast(getString(R.string.created_file) + result.getDriveFile().getDriveId());
                                         Log.e("create file", result.getDriveFile().getDriveId().encodeToString() + " " + result.getDriveFile().getDriveId().getResourceId());
 
                                         DriveFile file = result.getDriveFile().getDriveId().asDriveFile();
@@ -128,7 +128,7 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
                                                     @Override
                                                     public void onResult(@NonNull DriveApi.DriveContentsResult result) {
                                                         if(!result.getStatus().isSuccess()) {
-                                                            showToast("Error in opening file");
+                                                            showToast(getString(R.string.error_opening_file));
                                                         }
 
                                                         DriveContents driveContents = result.getDriveContents();
@@ -155,7 +155,7 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
             startActivityForResult(speechIntent, REQUEST_SPEECH);
         } catch (Exception e) {
             e.printStackTrace();
-            showToast("Speech not supported");
+            showToast(getString(R.string.speed_not_supported));
         }
     }
 
@@ -269,9 +269,9 @@ public class AddNewNoteActivity extends BaseActivity implements AddNewNoteView,
                         @Override
                         public void onResult(@NonNull com.google.android.gms.common.api.Status status) {
                             if(status.isSuccess()) {
-                                showToast("File has been written!");
+                                showToast(getString(R.string.file_written));
                             } else {
-                                showToast("File has Failed");
+                                showToast(getString(R.string.file_writing_failed));
                             }
                         }
                     });
